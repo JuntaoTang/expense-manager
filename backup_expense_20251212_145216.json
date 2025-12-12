@@ -1,0 +1,14 @@
+{
+  "records": [],
+  "loans": [],
+  "settings": {
+    "initial_balance": 100.0,
+    "threshold_warn": 3000.0,
+    "threshold_urgent": 1000.0,
+    "reminder_enabled": false,
+    "reminder_time": "20:00"
+  },
+  "overconsumption_categories": [],
+  "backup_time": "2025-12-12T14:52:16",
+  "version": "1.0"
+}

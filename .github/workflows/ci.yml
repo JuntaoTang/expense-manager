@@ -1,0 +1,45 @@
+# 工作流名称
+name: ExpenseManager CI
+
+# 触发条件：推送到 main 分支，或向 main 提交 Pull Request
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# 定义任务
+jobs:
+  test:
+    # 使用最新的 Ubuntu 环境
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. 检出代码
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 2. 设置 Python 环境（匹配你本地的 3.13）
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+
+    # 3. 安装依赖
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-cov
+
+    # 4. 运行所有测试（包括单元测试和集成测试）
+    - name: Run tests
+      run: |
+        python -m pytest test/ -v --cov=expense_manager --cov-report=term-missing
+
+    # 5. （可选）上传覆盖率报告到 Actions Artifacts
+    - name: Archive coverage report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: htmlcov/
