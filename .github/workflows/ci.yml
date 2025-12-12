@@ -32,9 +32,17 @@ jobs:
         pip install pytest pytest-cov
 
     # 4. 运行所有测试（包括单元测试和集成测试）
-    - name: Run tests
+    - name: Run unit tests
       run: |
-        python -m pytest test/ -v --cov=expense_manager --cov-report=term-missing
+        python -m pytest test/test_user.py test/test_backup.py -v
+
+    - name: Run integration tests
+      run: |
+        python -m pytest test/test_integration.py -v
+
+    - name: Generate coverage report
+      run: |
+        python -m pytest test/ --cov=expense_manager --cov-report=html
 
     # 5. （可选）上传覆盖率报告到 Actions Artifacts
     - name: Archive coverage report
